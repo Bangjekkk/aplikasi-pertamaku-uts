@@ -5,13 +5,33 @@ import sqlite3 from "sqlite3";
 import cors from "cors";
 
 const app = express();
+
 app.use(express.json());
-app.use(
-  cors({
-    origin: "*",
-    optionsSuccessStatus: 200,
-  })
-);
+
+const allowedOrigins = [
+  'http://localhost:3000', 
+  'http://localhost:8080', 
+  'http://localhost/JacquesFarrell/',
+  'http://localhost',
+  'http://localhost:80',
+  'http://4.147.168.43/JacquesFarrell/',
+  'http://4.147.168.43',
+  'http://4.147.168.43:3000',
+  'http://4.147.168.43:80'
+];
+
+app.use(cors({
+  origin: (origin, callback) => {
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      callback(null, origin);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  optionsSuccessStatus: 200,
+}));
 
 const connection = new sqlite3.Database("./db/aplikasi.db");
 

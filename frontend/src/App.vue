@@ -8,13 +8,13 @@ const newEmail = ref("");
 
 const getUser = async () => {
   const response = await fetch(
-    `http://localhost:3000/api/user/${userId.value}`
+    `http://4.147.168.43:3000/api/user/${userId.value}`
   );
   users.value = await response.json();
 };
 
 const changeEmail = async () => {
-  await fetch(`http://localhost:3000/api/user/${userId.value}/change-email`, {
+  await fetch(`http://4.147.168.43:3000/api/user/${userId.value}/change-email`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
